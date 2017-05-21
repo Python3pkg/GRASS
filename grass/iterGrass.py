@@ -78,7 +78,7 @@ def changeEdgeWeights(orgGraph, graph, contigToLabels, ofile):
 	changesMade = 0
 	noChange = 0
 	weightCalc = 0;
-	for (node1, node2), weight in graph.iteritems():
+	for (node1, node2), weight in graph.items():
 		if node1 == node2:
 			ofile.write(node1 + "\t" + node2 + "\t" + str(weight) + "\n")
 			noChange += 1
@@ -109,7 +109,7 @@ def changeEdgeWeights(orgGraph, graph, contigToLabels, ofile):
 def addNewEdges(orgGraph, graph, contigToLabels, labelToContigs, ofile):
 	changesMade = 0
 	weightCalc = 0
-	for label in labelToContigs.iterkeys():
+	for label in labelToContigs.keys():
 		contigs = []
 		probs = []
 		for (contig, prob) in labelToContigs[label]:
@@ -154,7 +154,7 @@ def run(keys, labelFile, juntoConfigFile, outdir):
 
 	while (diff > (0.05*orgDiff)):
 		i += 1
-		print ("Started iteration number: " + str(i) + "\n")
+		print(("Started iteration number: " + str(i) + "\n"))
 
 		if (i == 2):
 			orgDiff = diff;
@@ -183,18 +183,18 @@ def run(keys, labelFile, juntoConfigFile, outdir):
 			sizeNewGraph += temp
 		
 		with open(keys["seed_file"], 'w') as ofile:
-			for contig in contigToLabels.iterkeys():
+			for contig in contigToLabels.keys():
 				for (label, prob) in contigToLabels[contig]:
 					ofile.write(contig + "\t" + label + "\t" + str(prob) + "\n")
 		
 		diff = abs(sizeNewGraph - graphSize)
-		print("Number of edges added/removed: " + str(diff) + "\n")
+		print(("Number of edges added/removed: " + str(diff) + "\n"))
 		
 		if ((avgOldWeight/avgNewWeight) > 0.5): 
 			iters+=1
 		
 		with open(juntoConfigFile, "w") as configFile:
-                	for x in keys.iterkeys():
+                	for x in keys.keys():
                         	configFile.write(x + " = " + keys[x] + "\n")
                 	configFile.write("data_format = edge_factored\n")
                 	configFile.write("iters = " + str(iters) + "\n")

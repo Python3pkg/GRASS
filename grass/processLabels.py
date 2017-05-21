@@ -26,7 +26,7 @@ def genFinalLabels(keys, labelFiles, finalLabelFile, outdir):
 			data = pd.read_table(f, header=None, usecols=[0,1], names=['query', 'subject'])
 			table1 = data.set_index("query").to_dict()['subject']
 		try:
-			for key,value in table1.items():
+			for key,value in list(table1.items()):
 				probability=1.0
 				blastOut.write(key + "\t" + value + "\t" +str(probability)+ "\n")
 		except KeyError:
@@ -51,7 +51,7 @@ def genFinalLabels(keys, labelFiles, finalLabelFile, outdir):
 		call(["rm", outfile2])
 
 		try:
-			for key,value in table1.items():
+			for key,value in list(table1.items()):
 				if key in table2:
 					probability=1.0
 					blastOut.write(key + "\t" + value + "\t" +str(probability)+ "\n")
